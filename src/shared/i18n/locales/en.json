@@ -32,7 +32,7 @@
     }
   },
   "splash": {
-    "tagline": "An isometric city in the browser. Follow the route, one stop at a time.",
+    "tagline": "Follow the route, step by step.",
     "loading": "Loading {{percent}}%",
     "ready": "Ready",
     "start": "Start"

@@ -9,7 +9,7 @@ import { markerTexture } from './markerTexture'
 const SELECTED_COLOR = 0x00e5c0
 const HOVERED_COLOR = 0xffd166
 
-const MARKER_GAP = 12
+const ROOF_HALF_HEIGHT = (1 - 2 * BUILDING_FOOTPRINT_INSET) * (TILE_H / 2)
 const MARKER_BOB = 5
 const MARKER_PERIOD = 1400
 
@@ -146,7 +146,7 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     if (!sprite) return
 
     pin.x = sprite.x
-    markerBaseY = sprite.y - sprite.height - MARKER_GAP
+    markerBaseY = sprite.y - sprite.height + ROOF_HALF_HEIGHT
     pin.y = markerBaseY
   }
 
@@ -167,10 +167,12 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     }
 
     const sprite = sprites[active.id]
+    const overBuilding = sprite.y - sprite.height
+    const overMarker = pin.visible && targetId === active.id ? markerBaseY - MARKER_BOB - pin.height : overBuilding
 
     label.text = names[active.id] ?? active.id
     label.x = sprite.x
-    label.y = sprite.y - sprite.height - LABEL_GAP
+    label.y = Math.min(overBuilding, overMarker) - LABEL_GAP
     label.visible = true
   }
 
@@ -208,6 +210,7 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
   const setViewScale = (scale: number) => {
     label.scale.set(1 / scale)
     pin.scale.set(markerScale / scale)
+    refresh()
   }
 
   const destroy = () => {
