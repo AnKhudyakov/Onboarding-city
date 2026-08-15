@@ -4,23 +4,18 @@ type IconProps = {
   className?: string
 }
 
-export const CoinIcon: React.FC<IconProps> = ({ className }) => (
+export const GemIcon: React.FC<IconProps> = ({ className }) => (
   <svg className={className} viewBox="0 0 20 20" aria-hidden="true">
-    <circle cx="10" cy="10" r="8" fill="#f0a92b" />
-    <circle cx="10" cy="10" r="6" fill="#ffd66b" />
-    <path
-      d="M10 5.5v9M7.6 7.6h4.2a1.7 1.7 0 0 1 0 3.4H8.2a1.7 1.7 0 0 0 0 3.4h4"
-      stroke="#a56c12"
-      strokeWidth="1.3"
-      fill="none"
-      strokeLinecap="round"
-    />
+    <path d="M6.6 2.8h6.8l3 5.1H3.6z" fill="#cbb2ff" />
+    <path d="M3.6 7.9h12.8L10 17.6z" fill="#8b5cf6" />
+    <path d="M6.6 2.8 8.2 7.9 10 2.8l1.8 5.1 1.6-5.1M8.2 7.9 10 17.6l1.8-9.7" fill="none" stroke="#5b21b6" strokeWidth="0.9" strokeLinejoin="round" />
+    <path d="M3.6 7.9h12.8" fill="none" stroke="#5b21b6" strokeWidth="0.9" />
   </svg>
 )
 
 export const EnergyIcon: React.FC<IconProps> = ({ className }) => (
   <svg className={className} viewBox="0 0 20 20" aria-hidden="true">
-    <path d="M11.6 2 4.8 11h4l-.6 7 7-9.4h-4.2z" fill="#7fb4ff" stroke="#3f7ee0" strokeWidth="1" strokeLinejoin="round" />
+    <path d="M11.6 2 4.8 11h4l-.6 7 7-9.4h-4.2z" fill="#ffd66b" stroke="#d99a1c" strokeWidth="1" strokeLinejoin="round" />
   </svg>
 )
 

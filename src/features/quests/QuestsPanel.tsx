@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { buildQuests } from '@/entities/quests'
-import { CheckIcon, QuestIcon } from '@/features/hud/icons'
+import { CheckIcon, QuestIcon } from '@/shared/ui/icons'
 
 import styles from './QuestsPanel.module.scss'
 

@@ -7,14 +7,14 @@ export const ENERGY_REGEN_SECONDS = 30
 const TRAVEL_COST = 1
 const XP_FIRST_VISIT = 120
 const XP_REVISIT = 30
-const COINS_FIRST_VISIT = 250
-const COINS_REVISIT = 60
+const GEMS_FIRST_VISIT = 250
+const GEMS_REVISIT = 60
 
 type ProgressState = {
   visited: string[]
   trips: number
   xp: number
-  coins: number
+  gems: number
   energy: number
   secondsToEnergy: number
 }
@@ -23,7 +23,7 @@ const initialState: ProgressState = {
   visited: [],
   trips: 0,
   xp: 0,
-  coins: 1250,
+  gems: 1250,
   energy: 48,
   secondsToEnergy: ENERGY_REGEN_SECONDS,
 }
@@ -42,7 +42,7 @@ const progressSlice = createSlice({
       if (first) state.visited.push(action.payload)
 
       state.xp += first ? XP_FIRST_VISIT : XP_REVISIT
-      state.coins += first ? COINS_FIRST_VISIT : COINS_REVISIT
+      state.gems += first ? GEMS_FIRST_VISIT : GEMS_REVISIT
     },
     energyTick(state) {
       if (state.energy >= ENERGY_MAX) {

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { CityCanvas } from '@/features/city/CityCanvas'
-import { Header } from '@/features/hud/Header'
+import { Header } from '@/features/header/Header'
 import { QuestsPanel } from '@/features/quests/QuestsPanel'
 import TourPanel from '@/features/tour/TourPanel'
 import { loadAssets } from '@/shared/lib/pixi/loadAssets'

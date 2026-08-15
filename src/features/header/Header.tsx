@@ -6,16 +6,16 @@ import type { RootState } from '@/app/store'
 import { ENERGY_MAX, energyTick, levelFromXp, resetProgress, XP_PER_LEVEL, xpIntoLevel } from '@/entities/progressSlice'
 import { reset } from '@/entities/tourSlice'
 import { LANGUAGES, setLanguage } from '@/shared/i18n'
+import { EnergyIcon, GearIcon, GemIcon } from '@/shared/ui/icons'
 
 import styles from './Header.module.scss'
-import { CoinIcon, EnergyIcon, GearIcon } from './icons'
 
 const clock = (seconds: number) => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`
 
 export const Header: React.FC = () => {
   const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
-  const { xp, coins, energy, secondsToEnergy } = useSelector((s: RootState) => s.progress)
+  const { xp, gems, energy, secondsToEnergy } = useSelector((s: RootState) => s.progress)
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   useEffect(() => {
@@ -43,9 +43,9 @@ export const Header: React.FC = () => {
       </div>
 
       <div className={styles.resources}>
-        <span className={`${styles.pill} ${styles.pillCoin}`}>
-          <CoinIcon className={styles.icon} />
-          <span className={styles.value}>{coins.toLocaleString(i18n.language)}</span>
+        <span className={`${styles.pill} ${styles.pillGem}`}>
+          <GemIcon className={styles.icon} />
+          <span className={styles.value}>{gems.toLocaleString(i18n.language)}</span>
         </span>
 
         <span className={`${styles.pill} ${styles.pillEnergy}`}>
