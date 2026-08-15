@@ -5,11 +5,16 @@ import { isoToScreen } from '@/features/city/lib/centerIsometric'
 import { BUILDING_FOOTPRINT_INSET, SPRITE_BASE_OFFSET, TILE_H, TILE_W } from '@/shared/constants/tiles'
 
 const SELECTED_COLOR = 0x00e5c0
-const MARKER_COLOR = 0xffd166
-const MARKER_GAP = 14
+const HOVERED_COLOR = 0xffd166
+
+const MARKER_FILL = 0xffd166
+const MARKER_RIM = 0x1a1a22
+const MARKER_TICK = 0x2a1f06
+const MARKER_RADIUS = 13
+const MARKER_TIP = 4
+const MARKER_GAP = 10
 const MARKER_BOB = 5
 const MARKER_PERIOD = 1400
-const HOVERED_COLOR = 0xffd166
 
 const HIGHLIGHT_GROWTH = 1.06
 
@@ -47,13 +52,35 @@ const silhouette = (color: number) => {
   return filter
 }
 
-const arrow = () => {
-  const shape = new PIXI.Graphics()
+const pinPath = (radius: number, tip: number) => {
+  const centre = -(tip + Math.round(radius * 2))
+  const distance = Math.abs(centre) - tip
+  const half = Math.asin(radius / distance)
+  const points: number[] = []
 
+  for (let i = 0; i <= 28; i++) {
+    const angle = Math.PI / 2 - half - (i / 28) * (2 * Math.PI - 2 * half)
+
+    points.push(radius * Math.cos(angle), centre + radius * Math.sin(angle))
+  }
+
+  points.push(0, -tip)
+
+  return { points, centre }
+}
+
+const marker = () => {
+  const shape = new PIXI.Graphics()
+  const { points, centre } = pinPath(MARKER_RADIUS, MARKER_TIP)
+
+  shape.poly(points.map((v, i) => (i % 2 ? v + 3 : v))).fill({ color: 0x000000, alpha: 0.22 })
+  shape.poly(points).fill(MARKER_FILL).stroke({ color: MARKER_RIM, width: 2, join: 'round' })
+  shape.ellipse(0, centre - 4, MARKER_RADIUS * 0.62, MARKER_RADIUS * 0.34).fill({ color: 0xffffff, alpha: 0.34 })
   shape
-    .poly([0, 0, 9, -13, 3.5, -13, 3.5, -27, -3.5, -27, -3.5, -13, -9, -13])
-    .fill(MARKER_COLOR)
-    .stroke({ color: 0x1a1a22, width: 2, join: 'round' })
+    .moveTo(-5.2, centre - 0.2)
+    .lineTo(-1.4, centre + 3.6)
+    .lineTo(6.2, centre - 5)
+    .stroke({ color: MARKER_TICK, width: 3.4, cap: 'round', join: 'round' })
 
   return shape
 }
@@ -84,17 +111,17 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     },
   })
 
-  const marker = arrow()
+  const pin = marker()
 
-  marker.visible = false
-  marker.zIndex = 9_000
-  depthLayer.addChild(marker)
+  pin.visible = false
+  pin.zIndex = 9_000
+  depthLayer.addChild(pin)
 
   const bob = (ticker: PIXI.Ticker) => {
-    if (!marker.visible) return
+    if (!pin.visible) return
 
     elapsed += ticker.deltaMS
-    marker.y = markerBaseY - Math.abs(Math.sin((elapsed / MARKER_PERIOD) * Math.PI)) * MARKER_BOB
+    pin.y = markerBaseY - Math.abs(Math.sin((elapsed / MARKER_PERIOD) * Math.PI)) * MARKER_BOB
   }
 
   PIXI.Ticker.shared.add(bob)
@@ -147,13 +174,13 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
   const placeMarker = () => {
     const sprite = targetId ? sprites[targetId] : null
 
-    marker.visible = Boolean(sprite)
+    pin.visible = Boolean(sprite)
 
     if (!sprite) return
 
-    marker.x = sprite.x
+    pin.x = sprite.x
     markerBaseY = sprite.y - sprite.height - MARKER_GAP
-    marker.y = markerBaseY
+    pin.y = markerBaseY
   }
 
   const refresh = () => {
@@ -213,12 +240,12 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
 
   const setViewScale = (scale: number) => {
     label.scale.set(1 / scale)
-    marker.scale.set(1 / scale)
+    pin.scale.set(1 / scale)
   }
 
   const destroy = () => {
     PIXI.Ticker.shared.remove(bob)
-    marker.destroy()
+    pin.destroy()
     label.destroy()
     Object.values(highlights).forEach((h) => h.destroy())
     Object.values(sprites).forEach((s) => s.destroy())
