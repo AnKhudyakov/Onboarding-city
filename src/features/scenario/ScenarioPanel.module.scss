@@ -64,6 +64,13 @@
   gap: 4px;
 }
 
+.stage {
+  font-size: fonts.$text-xs;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .name {
   font-size: fonts.$text-base;
   font-weight: 700;
@@ -78,6 +85,7 @@
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 

@@ -1,6 +1,6 @@
 {
   "app": {
-    "loading": "Loading sprites…"
+    "title": "Iso City"
   },
   "header": {
     "level": "Lv. {{level}}",
@@ -11,20 +11,7 @@
     "language": "Language"
   },
   "quests": {
-    "title": "Quests",
-    "townHall": "Reach the Town Hall",
-    "landmarks": "Visit every landmark",
-    "routes": "Walk {{count}} routes"
-  },
-  "tour": {
-    "title": "Guided tour",
-    "stops": "{{count}} stops",
-    "stop": "Stop {{current}} of {{total}}",
-    "intro": "Click a building, or start the tour, and the walker routes to it over the road graph.",
-    "back": "Back",
-    "next": "Next",
-    "start": "Start",
-    "reset": "Reset"
+    "title": "Tasks"
   },
   "buildings": {
     "townHall": {
@@ -42,6 +29,43 @@
     "library": {
       "name": "Library",
       "description": "The west side. Selection state lives in Redux, and the Pixi scene reads it rather than owning it."
+    }
+  },
+  "splash": {
+    "tagline": "An isometric city in the browser. Follow the route, one stop at a time.",
+    "loading": "Loading {{percent}}%",
+    "ready": "Ready",
+    "start": "Start"
+  },
+  "scenario": {
+    "title": "Route",
+    "stageCounter": "Stage {{current}} of {{total}}",
+    "goTo": "Go to {{place}}",
+    "restart": "Restart",
+    "doneTitle": "Route complete",
+    "doneText": "All {{count}} stops visited. Restart to walk it again.",
+    "stages": {
+      "arrival": "Arrival",
+      "records": "Records",
+      "community": "Community"
+    },
+    "steps": {
+      "welcome": {
+        "title": "Report to the Town Hall",
+        "description": "The first stop. Head over and the walker takes the shortest route the road graph allows."
+      },
+      "archive": {
+        "title": "Look through the archive",
+        "description": "The Museum holds the records. It opens once the first stop is behind you."
+      },
+      "study": {
+        "title": "Spend an hour in the Library",
+        "description": "Reading room on the west side of the loop, across the square from the Museum."
+      },
+      "market": {
+        "title": "Meet the traders",
+        "description": "The Market Hall closes the route, on the south side where the walk began."
+      }
     }
   }
 }

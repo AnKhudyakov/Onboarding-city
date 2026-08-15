@@ -6,7 +6,8 @@ import type { RootState } from '@/app/store'
 import { CityCanvas } from '@/features/city/CityCanvas'
 import { Header } from '@/features/header/Header'
 import { QuestsPanel } from '@/features/quests/QuestsPanel'
-import TourPanel from '@/features/tour/TourPanel'
+import { ScenarioPanel } from '@/features/scenario/ScenarioPanel'
+import { SplashScreen } from '@/features/splash/SplashScreen'
 import { loadAssets } from '@/shared/lib/pixi/loadAssets'
 
 import '@/shared/styles/index.scss'
@@ -14,23 +15,28 @@ import styles from './App.module.scss'
 
 const App: React.FC = () => {
   const { t } = useTranslation()
+  const [progress, setProgress] = useState(0)
   const [ready, setReady] = useState(false)
+  const [started, setStarted] = useState(false)
   const buildings = useSelector((s: RootState) => s.city.buildings)
 
   useEffect(() => {
-    loadAssets().then(() => setReady(true))
+    loadAssets(setProgress).then(() => {
+      setProgress(1)
+      setReady(true)
+    })
   }, [])
 
-  if (!ready) {
+  if (!started) {
     return (
       <div className={styles.app}>
-        <div className={styles.loading}>{t('app.loading')}</div>
+        <SplashScreen progress={progress} ready={ready} onStart={() => setStarted(true)} />
       </div>
     )
   }
 
   return (
-    <div className={styles.app}>
+    <div className={styles.app} aria-label={t('app.title')}>
       <CityCanvas buildings={buildings} />
 
       <div className={styles.hud}>
@@ -38,7 +44,7 @@ const App: React.FC = () => {
 
         <div className={styles.column}>
           <QuestsPanel />
-          <TourPanel />
+          <ScenarioPanel />
         </div>
       </div>
     </div>

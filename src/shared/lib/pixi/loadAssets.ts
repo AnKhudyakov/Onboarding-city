@@ -19,11 +19,14 @@ const playerBundle = () =>
     })),
   ])
 
-export const loadAssets = async () => {
-  await PIXI.Assets.load([
-    ...Object.entries(TILE_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
-    ...Object.entries(PROP_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
-    ...Object.entries(BUILDING_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
-    ...playerBundle(),
-  ])
+export const loadAssets = async (onProgress?: (progress: number) => void) => {
+  await PIXI.Assets.load(
+    [
+      ...Object.entries(TILE_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
+      ...Object.entries(PROP_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
+      ...Object.entries(BUILDING_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
+      ...playerBundle(),
+    ],
+    onProgress
+  )
 }

@@ -74,6 +74,7 @@ export const createScene = (buildings: CityBuilding[], onSelect: (b: CityBuildin
     fit,
     setSelected: buildingsControl.setSelected,
     setNames: buildingsControl.setNames,
+    setLocked: buildingsControl.setLocked,
     destroy,
   }
 }

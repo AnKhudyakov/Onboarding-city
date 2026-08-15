@@ -21,6 +21,17 @@ const outline = (height: number) => {
   return new PIXI.Polygon([-halfW, base, 0, base + halfH, halfW, base, halfW, base - walls, 0, base - halfH - walls, -halfW, base - walls])
 }
 
+const dimmed = () => {
+  const filter = new PIXI.ColorMatrixFilter()
+  const k = 0.82
+  const lift = 0.08
+  const [r, g, b] = [0.2126 * k, 0.7152 * k, 0.0722 * k]
+
+  filter.matrix = [r, g, b, 0, lift, r, g, b, 0, lift, r, g, b, 0, lift, 0, 0, 0, 1, 0]
+
+  return filter
+}
+
 const silhouette = (color: number) => {
   const filter = new PIXI.ColorMatrixFilter()
   const r = ((color >> 16) & 0xff) / 255
@@ -36,12 +47,14 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
   let selectedId: string | null = null
   let hoveredId: string | null = null
   let names: Record<string, string> = {}
+  let locked: string[] = []
 
   const sprites: Record<string, PIXI.Sprite> = {}
   const highlights: Record<string, PIXI.Sprite> = {}
 
   const selectedFilter = silhouette(SELECTED_COLOR)
   const hoveredFilter = silhouette(HOVERED_COLOR)
+  const lockedFilter = dimmed()
 
   const label = new PIXI.Text({
     text: '',
@@ -130,6 +143,22 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     refresh()
   }
 
+  const setLocked = (next: string[]) => {
+    locked = next
+
+    for (const [id, sprite] of Object.entries(sprites)) {
+      const isLocked = locked.includes(id)
+
+      sprite.eventMode = isLocked ? 'none' : 'static'
+      sprite.cursor = isLocked ? 'default' : 'pointer'
+      sprite.filters = isLocked ? [lockedFilter] : []
+    }
+
+    if (hoveredId && locked.includes(hoveredId)) hoveredId = null
+
+    refresh()
+  }
+
   const setViewScale = (scale: number) => {
     label.scale.set(1 / scale)
   }
@@ -140,5 +169,5 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     Object.values(sprites).forEach((s) => s.destroy())
   }
 
-  return { setSelected, setNames, setViewScale, destroy }
+  return { setSelected, setNames, setLocked, setViewScale, destroy }
 }

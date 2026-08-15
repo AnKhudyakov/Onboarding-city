@@ -73,5 +73,5 @@ export const PROPS: Prop[] = [
 
   { x: 2, y: 0, prop: 'rocks' },
   { x: 4, y: 0, prop: 'rocks', size: 0.86 },
-  { x: 3, y: -2, prop: 'boat' },
+  { x: 3.5, y: -2, prop: 'boat' },
 ]

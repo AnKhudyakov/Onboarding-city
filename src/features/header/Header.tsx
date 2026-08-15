@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { ENERGY_MAX, energyTick, levelFromXp, resetProgress, XP_PER_LEVEL, xpIntoLevel } from '@/entities/progressSlice'
-import { reset } from '@/entities/tourSlice'
+import { resetScenario } from '@/entities/scenarioSlice'
+import { clearSelection } from '@/entities/selectionSlice'
 import { LANGUAGES, setLanguage } from '@/shared/i18n'
 import { EnergyIcon, GearIcon, GemIcon } from '@/shared/ui/icons'
 
@@ -90,7 +91,8 @@ export const Header: React.FC = () => {
               className={styles.menuItem}
               onClick={() => {
                 dispatch(resetProgress())
-                dispatch(reset())
+                dispatch(resetScenario())
+                dispatch(clearSelection())
                 setSettingsOpen(false)
               }}
             >

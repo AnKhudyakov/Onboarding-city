@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import cityReducer from '@/entities/citySlice'
 import progressReducer from '@/entities/progressSlice'
-import tourReducer from '@/entities/tourSlice'
+import scenarioReducer from '@/entities/scenarioSlice'
+import selectionReducer from '@/entities/selectionSlice'
 
 export const store = configureStore({
   reducer: {
     city: cityReducer,
     progress: progressReducer,
-    tour: tourReducer,
+    scenario: scenarioReducer,
+    selection: selectionReducer,
   },
 })
 
