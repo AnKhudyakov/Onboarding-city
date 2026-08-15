@@ -69,9 +69,9 @@ export const PROP_TEXTURES = {
 export type PropId = keyof typeof PROP_TEXTURES
 
 export const BUILDING_TEXTURES = {
-  blockConcrete: 'buildings/blockConcrete.png',
-  towerConcrete: 'buildings/towerConcrete.png',
-  officeMid: 'buildings/officeMid.png',
+  officeGreen: 'buildings/officeGreen.png',
+  towerGreen: 'buildings/towerGreen.png',
+  officeBlue: 'buildings/officeBlue.png',
   shop: 'buildings/shop.png',
 } as const
 

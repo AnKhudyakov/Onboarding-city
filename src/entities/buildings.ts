@@ -19,14 +19,14 @@ export const BUILDINGS: CityBuilding[] = [
     x: 4,
     y: 3,
     entry: { x: 4, y: 2 },
-    piece: 'blockConcrete',
+    piece: 'officeGreen',
   },
   {
     id: 'museum',
     x: 6,
     y: 4,
     entry: { x: 7, y: 4 },
-    piece: 'towerConcrete',
+    piece: 'towerGreen',
   },
   {
     id: 'market',
@@ -40,6 +40,6 @@ export const BUILDINGS: CityBuilding[] = [
     x: 3,
     y: 5,
     entry: { x: 2, y: 5 },
-    piece: 'officeMid',
+    piece: 'officeBlue',
   },
 ]
