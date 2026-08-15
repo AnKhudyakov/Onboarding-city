@@ -11,6 +11,7 @@ type Options = {
   speed?: number
   arriveThreshold?: number
   animationController?: ReturnType<typeof createAnimationController>
+  onArrive?: () => void
 }
 
 export const createMovementSystem = (state: { position: Vector }, app: PIXI.Application, options: Options = {}) => {
@@ -52,7 +53,10 @@ export const createMovementSystem = (state: { position: Vector }, app: PIXI.Appl
 
       index += 1
 
-      if (index >= path.length) clear()
+      if (index >= path.length) {
+        clear()
+        options.onArrive?.()
+      }
 
       return
     }

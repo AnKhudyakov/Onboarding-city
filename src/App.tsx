@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { CityCanvas } from '@/features/city/CityCanvas'
+import { Header } from '@/features/hud/Header'
+import { QuestsPanel } from '@/features/quests/QuestsPanel'
 import TourPanel from '@/features/tour/TourPanel'
 import { loadAssets } from '@/shared/lib/pixi/loadAssets'
 
@@ -17,21 +19,26 @@ const App: React.FC = () => {
     loadAssets().then(() => setReady(true))
   }, [])
 
+  if (!ready) {
+    return (
+      <div className={styles.app}>
+        <div className={styles.loading}>Loading sprites…</div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.app}>
-      <header className={styles.topbar}>
-        <span className={styles.brand}>Iso City</span>
-        <span className={styles.tagline}>Isometric Pixi demo</span>
-      </header>
+      <CityCanvas buildings={buildings} />
 
-      {ready ? (
-        <main className={styles.layout}>
-          <CityCanvas buildings={buildings} />
+      <div className={styles.hud}>
+        <Header />
+
+        <div className={styles.column}>
+          <QuestsPanel />
           <TourPanel />
-        </main>
-      ) : (
-        <div className={styles.loading}>Loading sprites…</div>
-      )}
+        </div>
+      </div>
     </div>
   )
 }

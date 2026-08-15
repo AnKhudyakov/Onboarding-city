@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { CityBuilding } from '@/entities/buildings'
+import { arrived, departed } from '@/entities/progressSlice'
 import { selectBuilding } from '@/entities/tourSlice'
 import { createScene } from '@/features/city/lib/renderScene'
 import { createAnimationController } from '@/features/player/lib/animationController'
@@ -21,6 +22,7 @@ export const useControlScene = (buildings: CityBuilding[]) => {
   const sceneRef = useRef<Scene | null>(null)
   const playerRef = useRef<Player | null>(null)
   const movementRef = useRef<Movement | null>(null)
+  const targetRef = useRef<string | null>(null)
 
   const fitView = (app: PIXI.Application) => {
     const scale = sceneRef.current?.fit(app)
@@ -41,6 +43,9 @@ export const useControlScene = (buildings: CityBuilding[]) => {
 
     movementRef.current = createMovementSystem(player.state, app, {
       animationController: createAnimationController(player.player),
+      onArrive: () => {
+        if (targetRef.current) dispatch(arrived(targetRef.current))
+      },
     })
 
     fitView(app)
@@ -56,10 +61,15 @@ export const useControlScene = (buildings: CityBuilding[]) => {
     if (!scene || !player || !movement) return
 
     scene.setSelected(selectedId)
+    targetRef.current = selectedId
 
-    if (selectedId) movement.setPath(buildPath(player.state.position, selectedId))
-    else movement.clear()
-  }, [selectedId])
+    if (selectedId) {
+      movement.setPath(buildPath(player.state.position, selectedId))
+      dispatch(departed())
+    } else {
+      movement.clear()
+    }
+  }, [dispatch, selectedId])
 
   useEffect(
     () => () => {

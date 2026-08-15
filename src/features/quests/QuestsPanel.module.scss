@@ -1,0 +1,163 @@
+@use 'shared/styles/fonts';
+
+@mixin chevron {
+  transform: rotate(-45deg) translate(-2px, -2px);
+
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-500);
+  border-bottom: 2px solid var(--text-500);
+
+  transition: transform 0.2s ease;
+}
+
+@mixin row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.panel {
+  pointer-events: auto;
+
+  overflow: hidden;
+
+  width: 100%;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-lg);
+
+  background: var(--glass-sheen), var(--glass);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-panel), var(--shadow-inset);
+}
+
+.header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  width: 100%;
+  padding: 12px 14px;
+
+  color: var(--text-100);
+}
+
+.headerIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-500);
+}
+
+.title {
+  font-size: fonts.$text-sm;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.count {
+  margin-left: auto;
+  font-size: fonts.$text-xs;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-500);
+}
+
+.chevron {
+  @include chevron;
+}
+
+.chevronOpen {
+  @include chevron;
+
+  transform: rotate(45deg) translate(-1px, -3px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 2px 14px 14px;
+
+  list-style: none;
+}
+
+.item {
+  @include row;
+}
+
+.itemDone {
+  @include row;
+
+  .label {
+    color: var(--text-500);
+    text-decoration: line-through;
+  }
+
+  .fill {
+    background: var(--text-500);
+  }
+}
+
+.marker {
+  display: grid;
+  flex: none;
+  place-items: center;
+
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--glass-line);
+  border-radius: 7px;
+
+  color: var(--accent-500);
+
+  background: var(--glass-raised);
+}
+
+.check {
+  width: 14px;
+  height: 14px;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.label {
+  overflow: hidden;
+
+  font-size: fonts.$text-sm;
+  color: var(--text-100);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track {
+  overflow: hidden;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: rgb(0 0 0 / 34%);
+}
+
+.fill {
+  display: block;
+
+  height: 100%;
+  border-radius: var(--radius-pill);
+
+  background: linear-gradient(90deg, var(--xp-500), var(--accent-500));
+
+  transition: width 0.4s ease;
+}
+
+.progress {
+  flex: none;
+  font-size: fonts.$text-xs;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-300);
+}

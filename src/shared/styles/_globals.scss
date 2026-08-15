@@ -16,6 +16,21 @@
   --text-300: #{colors.$text-300};
   --text-500: #{colors.$text-500};
   --accent-500: #{colors.$accent-500};
+  --gold-500: #{colors.$gold-500};
+  --energy-500: #{colors.$energy-500};
+  --xp-500: #{colors.$xp-500};
+  --glass: rgb(10 14 22 / 40%);
+  --glass-strong: rgb(10 14 22 / 60%);
+  --glass-raised: rgb(255 255 255 / 10%);
+  --glass-line: rgb(255 255 255 / 18%);
+  --glass-edge: rgb(255 255 255 / 38%);
+  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 13%), rgb(255 255 255 / 3%) 42%, rgb(255 255 255 / 0%));
+  --glass-blur: blur(24px) saturate(165%);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+  --shadow-panel: 0 18px 44px rgb(0 0 0 / 38%);
+  --shadow-inset: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgb(0 0 0 / 24%);
 
   font-size: 16px;
 }
@@ -23,6 +38,7 @@
 html,
 body,
 #root {
+  overflow: hidden;
   height: 100%;
 }
 

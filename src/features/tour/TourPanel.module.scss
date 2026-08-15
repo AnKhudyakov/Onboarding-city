@@ -1,64 +1,78 @@
 @use 'shared/styles/fonts';
 
 @mixin control {
-  padding: 8px 14px;
-  border-radius: 6px;
+  flex: 1;
+
+  height: 34px;
+  border-radius: var(--radius-md);
+
   font-size: fonts.$text-sm;
+  font-weight: 600;
+
   transition:
     background 0.15s ease,
-    border-color 0.15s ease;
+    color 0.15s ease,
+    filter 0.15s ease;
 
   &:disabled {
     cursor: default;
     color: var(--text-500);
-    opacity: 0.5;
+    opacity: 0.45;
   }
 }
 
 .panel {
+  pointer-events: auto;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 
-  padding: 20px;
-  border-left: 1px solid var(--ink-600);
+  padding: 14px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-lg);
 
-  background: var(--ink-800);
+  background: var(--glass-sheen), var(--glass);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-panel), var(--shadow-inset);
 }
 
 .header {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .title {
-  font-size: fonts.$text-lg;
-  font-weight: 600;
+  font-size: fonts.$text-sm;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .counter {
   font-size: fonts.$text-xs;
+  font-variant-numeric: tabular-nums;
   color: var(--text-500);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .body {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .name {
   font-size: fonts.$text-base;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent-500);
 }
 
 .text {
   font-size: fonts.$text-sm;
+  line-height: 1.45;
   color: var(--text-300);
 }
 
@@ -70,21 +84,26 @@
 .button {
   @include control;
 
-  border: 1px solid var(--ink-600);
-  background: var(--ink-700);
+  border: 1px solid var(--glass-line);
+  color: var(--text-300);
+  background: var(--glass-raised);
+  box-shadow: var(--shadow-inset);
 
   &:hover:not(:disabled) {
-    background: var(--ink-600);
+    color: var(--text-100);
+    background: rgb(255 255 255 / 14%);
   }
 }
 
 .primary {
   @include control;
 
-  border: 1px solid var(--accent-500);
-  font-weight: 600;
+  border: 1px solid rgb(0 229 192 / 55%);
   color: var(--ink-900);
-  background: var(--accent-500);
+  background: linear-gradient(180deg, #4ff2d6, var(--accent-500));
+  box-shadow:
+    var(--shadow-inset),
+    0 6px 18px rgb(0 229 192 / 26%);
 
   &:hover:not(:disabled) {
     filter: brightness(1.08);

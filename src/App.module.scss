@@ -1,51 +1,49 @@
 @use 'shared/styles/fonts';
 
 .app {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   height: 100%;
 }
 
-.topbar {
+.hud {
+  pointer-events: none;
+
+  position: absolute;
+  inset: 0;
+
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  align-items: baseline;
-
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--ink-600);
-
-  background: var(--ink-800);
+  flex-direction: column;
 }
 
-.brand {
-  font-size: fonts.$text-base;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.tagline {
-  font-size: fonts.$text-sm;
-  color: var(--text-500);
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+.column {
+  display: flex;
   flex: 1;
-  min-height: 0;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: space-between;
 
-  @media (width <= 720px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-  }
+  min-height: 0;
+  padding: 14px;
+}
+
+.column > * {
+  width: min(340px, calc(100vw - 28px));
 }
 
 .loading {
   display: grid;
-  flex: 1;
   place-items: center;
+
+  height: 100%;
 
   font-size: fonts.$text-sm;
   color: var(--text-500);
+}
+
+@media (height <= 620px) {
+  .column {
+    justify-content: flex-start;
+  }
 }
