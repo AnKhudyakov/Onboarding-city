@@ -70,6 +70,7 @@ export const useControlScene = (buildings: CityBuilding[]) => {
 
     scene.setNames(names())
     scene.setLocked(lockedIds(completed))
+    scene.setTarget(currentStep(completed)?.building ?? null)
     fitView(app)
   }
 
@@ -80,8 +81,11 @@ export const useControlScene = (buildings: CityBuilding[]) => {
   }, [buildings, i18n.language, t])
 
   useEffect(() => {
-    stepRef.current = currentStep(completed)
+    const step = currentStep(completed)
+
+    stepRef.current = step
     sceneRef.current?.setLocked(lockedIds(completed))
+    sceneRef.current?.setTarget(step?.building ?? null)
   }, [completed])
 
   useEffect(() => {

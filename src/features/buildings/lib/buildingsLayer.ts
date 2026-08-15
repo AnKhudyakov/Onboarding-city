@@ -5,6 +5,10 @@ import { isoToScreen } from '@/features/city/lib/centerIsometric'
 import { BUILDING_FOOTPRINT_INSET, SPRITE_BASE_OFFSET, TILE_H, TILE_W } from '@/shared/constants/tiles'
 
 const SELECTED_COLOR = 0x00e5c0
+const MARKER_COLOR = 0xffd166
+const MARKER_GAP = 14
+const MARKER_BOB = 5
+const MARKER_PERIOD = 1400
 const HOVERED_COLOR = 0xffd166
 
 const HIGHLIGHT_GROWTH = 1.06
@@ -43,11 +47,25 @@ const silhouette = (color: number) => {
   return filter
 }
 
+const arrow = () => {
+  const shape = new PIXI.Graphics()
+
+  shape
+    .poly([0, 0, 9, -13, 3.5, -13, 3.5, -27, -3.5, -27, -3.5, -13, -9, -13])
+    .fill(MARKER_COLOR)
+    .stroke({ color: 0x1a1a22, width: 2, join: 'round' })
+
+  return shape
+}
+
 export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuilding[], onSelect: (b: CityBuilding) => void) => {
   let selectedId: string | null = null
   let hoveredId: string | null = null
+  let targetId: string | null = null
   let names: Record<string, string> = {}
   let locked: string[] = []
+  let elapsed = 0
+  let markerBaseY = 0
 
   const sprites: Record<string, PIXI.Sprite> = {}
   const highlights: Record<string, PIXI.Sprite> = {}
@@ -65,6 +83,21 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
       stroke: { color: 0x1a1a22, width: 5 },
     },
   })
+
+  const marker = arrow()
+
+  marker.visible = false
+  marker.zIndex = 9_000
+  depthLayer.addChild(marker)
+
+  const bob = (ticker: PIXI.Ticker) => {
+    if (!marker.visible) return
+
+    elapsed += ticker.deltaMS
+    marker.y = markerBaseY - Math.abs(Math.sin((elapsed / MARKER_PERIOD) * Math.PI)) * MARKER_BOB
+  }
+
+  PIXI.Ticker.shared.add(bob)
 
   label.anchor.set(0.5, 1)
   label.visible = false
@@ -111,7 +144,21 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     sprites[building.id] = sprite
   }
 
+  const placeMarker = () => {
+    const sprite = targetId ? sprites[targetId] : null
+
+    marker.visible = Boolean(sprite)
+
+    if (!sprite) return
+
+    marker.x = sprite.x
+    markerBaseY = sprite.y - sprite.height - MARKER_GAP
+    marker.y = markerBaseY
+  }
+
   const refresh = () => {
+    placeMarker()
+
     for (const [id, highlight] of Object.entries(highlights)) {
       highlight.visible = id === selectedId || id === hoveredId
       highlight.filters = [id === selectedId ? selectedFilter : hoveredFilter]
@@ -143,6 +190,11 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     refresh()
   }
 
+  const setTarget = (id: string | null) => {
+    targetId = id
+    refresh()
+  }
+
   const setLocked = (next: string[]) => {
     locked = next
 
@@ -161,13 +213,16 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
 
   const setViewScale = (scale: number) => {
     label.scale.set(1 / scale)
+    marker.scale.set(1 / scale)
   }
 
   const destroy = () => {
+    PIXI.Ticker.shared.remove(bob)
+    marker.destroy()
     label.destroy()
     Object.values(highlights).forEach((h) => h.destroy())
     Object.values(sprites).forEach((s) => s.destroy())
   }
 
-  return { setSelected, setNames, setLocked, setViewScale, destroy }
+  return { setSelected, setNames, setLocked, setTarget, setViewScale, destroy }
 }
