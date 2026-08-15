@@ -1,9 +1,9 @@
 @use 'shared/styles/fonts';
 
 @mixin control {
-  flex: 1;
-
-  height: 34px;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 12px;
   border-radius: var(--radius-md);
 
   font-size: fonts.$text-sm;
@@ -85,7 +85,7 @@
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
 }
 

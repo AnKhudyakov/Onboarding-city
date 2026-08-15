@@ -192,6 +192,12 @@
   top: 44px;
   right: 0;
 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+
   min-width: 200px;
   padding: 6px;
   border: 1px solid var(--glass-line);
@@ -219,12 +225,13 @@
   border-radius: 8px;
 
   font-size: fonts.$text-sm;
-  color: var(--text-300);
+  font-weight: 600;
+  color: var(--danger-500);
   text-align: left;
 
   &:hover {
-    color: var(--text-100);
-    background: rgb(255 255 255 / 10%);
+    color: #ff8a80;
+    background: rgb(255 107 94 / 14%);
   }
 }
 
