@@ -1,0 +1,51 @@
+@use 'shared/styles/fonts';
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--ink-600);
+
+  background: var(--ink-800);
+}
+
+.brand {
+  font-size: fonts.$text-base;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.tagline {
+  font-size: fonts.$text-sm;
+  color: var(--text-500);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  flex: 1;
+  min-height: 0;
+
+  @media (width <= 720px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+}
+
+.loading {
+  display: grid;
+  flex: 1;
+  place-items: center;
+
+  font-size: fonts.$text-sm;
+  color: var(--text-500);
+}

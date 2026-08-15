@@ -1,0 +1,64 @@
+@use './colors';
+@use './fonts';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink-900: #{colors.$ink-900};
+  --ink-800: #{colors.$ink-800};
+  --ink-700: #{colors.$ink-700};
+  --ink-600: #{colors.$ink-600};
+  --text-100: #{colors.$text-100};
+  --text-300: #{colors.$text-300};
+  --text-500: #{colors.$text-500};
+  --accent-500: #{colors.$accent-500};
+
+  font-size: 16px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: fonts.$font-sans;
+  font-size: fonts.$text-base;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-100);
+
+  background-color: var(--ink-900);
+
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+
+  border: none;
+
+  font: inherit;
+  color: inherit;
+
+  background-color: transparent;
+  outline: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}

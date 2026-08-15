@@ -1,0 +1,92 @@
+@use 'shared/styles/fonts';
+
+@mixin control {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: fonts.$text-sm;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+
+  &:disabled {
+    cursor: default;
+    color: var(--text-500);
+    opacity: 0.5;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 20px;
+  border-left: 1px solid var(--ink-600);
+
+  background: var(--ink-800);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: fonts.$text-lg;
+  font-weight: 600;
+}
+
+.counter {
+  font-size: fonts.$text-xs;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name {
+  font-size: fonts.$text-base;
+  font-weight: 600;
+  color: var(--accent-500);
+}
+
+.text {
+  font-size: fonts.$text-sm;
+  color: var(--text-300);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  @include control;
+
+  border: 1px solid var(--ink-600);
+  background: var(--ink-700);
+
+  &:hover:not(:disabled) {
+    background: var(--ink-600);
+  }
+}
+
+.primary {
+  @include control;
+
+  border: 1px solid var(--accent-500);
+  font-weight: 600;
+  color: var(--ink-900);
+  background: var(--accent-500);
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+}
