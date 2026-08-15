@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '@/app/store'
 import { CityCanvas } from '@/features/city/CityCanvas'
 import { Header } from '@/features/header/Header'
+import { InteriorView } from '@/features/interior/InteriorView'
 import { QuestsPanel } from '@/features/quests/QuestsPanel'
 import { ScenarioPanel } from '@/features/scenario/ScenarioPanel'
 import { SplashScreen } from '@/features/splash/SplashScreen'
@@ -46,6 +47,8 @@ const App: React.FC = () => {
           <QuestsPanel />
           <ScenarioPanel />
         </div>
+
+        <InteriorView />
       </div>
     </div>
   )

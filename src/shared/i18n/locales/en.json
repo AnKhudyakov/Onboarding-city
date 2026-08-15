@@ -67,5 +67,18 @@
         "description": "The Market Hall closes the route, on the south side where the walk began."
       }
     }
+  },
+  "interior": {
+    "next": "Continue",
+    "done": "Got it",
+    "leave": "Leave"
+  },
+  "npc": {
+    "guide": "Guide"
+  },
+  "dialogue": {
+    "townHall.1": "You found it. This is where every route starts, so let me hand you the short version.",
+    "townHall.2": "Clicking a building asks the road graph for a route, and the walker follows it. There is no free roaming here, and that is on purpose.",
+    "townHall.3": "Next stop is the Museum. It opened the moment you walked in here, so the arrow will point you at it."
   }
 }

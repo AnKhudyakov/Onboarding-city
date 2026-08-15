@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
-import { BUILDINGS, CityBuilding, nameKey } from '@/entities/buildings'
+import { BuildingId, BUILDINGS, CityBuilding, nameKey } from '@/entities/buildings'
+import { enter } from '@/entities/interiorSlice'
+import { DIALOGUES } from '@/entities/npcs'
 import { arrived, departed } from '@/entities/progressSlice'
 import { currentStep, unlockedBuildings } from '@/entities/scenario'
 import { completeStep } from '@/entities/scenarioSlice'
@@ -64,7 +66,10 @@ export const useControlScene = (buildings: CityBuilding[]) => {
 
         dispatch(arrived(target))
 
-        if (stepRef.current?.building === target) dispatch(completeStep(stepRef.current.id))
+        if (stepRef.current?.building !== target) return
+
+        if (DIALOGUES[target as BuildingId]) dispatch(enter(target))
+        else dispatch(completeStep(stepRef.current.id))
       },
     })
 
