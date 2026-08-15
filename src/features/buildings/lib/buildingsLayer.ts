@@ -4,14 +4,11 @@ import { CityBuilding } from '@/entities/buildings'
 import { isoToScreen } from '@/features/city/lib/centerIsometric'
 import { BUILDING_FOOTPRINT_INSET, SPRITE_BASE_OFFSET, TILE_H, TILE_W } from '@/shared/constants/tiles'
 
+import { markerTexture } from './markerTexture'
+
 const SELECTED_COLOR = 0x00e5c0
 const HOVERED_COLOR = 0xffd166
 
-const MARKER_FACE = 0xffd166
-const MARKER_LIT = 0xfff0bb
-const MARKER_SIDE = 0xb07d18
-const MARKER_RIM = 0x241a04
-const MARKER_DEPTH = 3
 const MARKER_GAP = 12
 const MARKER_BOB = 5
 const MARKER_PERIOD = 1400
@@ -52,37 +49,6 @@ const silhouette = (color: number) => {
   return filter
 }
 
-const bangShape = (dx: number, dy: number) => {
-  const stem = [-5.2 + dx, -35 + dy, 5.2 + dx, -35 + dy, 3.4 + dx, -14.5 + dy, -3.4 + dx, -14.5 + dy]
-
-  return { stem, dot: [dx, -6.2 + dy, 4.6] as const }
-}
-
-const marker = () => {
-  const shape = new PIXI.Graphics()
-  const face = bangShape(0, 0)
-  const side = bangShape(-MARKER_DEPTH, MARKER_DEPTH)
-
-  shape.ellipse(-MARKER_DEPTH, 1, 9, 3.4).fill({ color: 0x000000, alpha: 0.22 })
-
-  shape.poly(side.stem).fill(MARKER_SIDE).stroke({ color: MARKER_SIDE, width: 2, join: 'round' })
-  shape
-    .circle(...side.dot)
-    .fill(MARKER_SIDE)
-    .stroke({ color: MARKER_SIDE, width: 2 })
-
-  shape.poly(face.stem).fill(MARKER_FACE).stroke({ color: MARKER_RIM, width: 2, join: 'round' })
-  shape
-    .circle(...face.dot)
-    .fill(MARKER_FACE)
-    .stroke({ color: MARKER_RIM, width: 2 })
-
-  shape.poly([1.3, -33.2, 3.8, -33.2, 2.8, -17, 0.8, -17]).fill({ color: MARKER_LIT, alpha: 0.85 })
-  shape.circle(1.5, -7.5, 1.8).fill({ color: MARKER_LIT, alpha: 0.75 })
-
-  return shape
-}
-
 export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuilding[], onSelect: (b: CityBuilding) => void) => {
   let selectedId: string | null = null
   let hoveredId: string | null = null
@@ -109,7 +75,10 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     },
   })
 
-  const pin = marker()
+  const { texture: markerArt, scale: markerScale } = markerTexture()
+  const pin = new PIXI.Sprite(markerArt)
+
+  pin.anchor.set(0.5, 1)
 
   pin.visible = false
   pin.zIndex = 9_000
@@ -238,12 +207,13 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
 
   const setViewScale = (scale: number) => {
     label.scale.set(1 / scale)
-    pin.scale.set(1 / scale)
+    pin.scale.set(markerScale / scale)
   }
 
   const destroy = () => {
     PIXI.Ticker.shared.remove(bob)
     pin.destroy()
+    markerArt.destroy(true)
     label.destroy()
     Object.values(highlights).forEach((h) => h.destroy())
     Object.values(sprites).forEach((s) => s.destroy())
