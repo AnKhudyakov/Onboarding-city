@@ -7,12 +7,12 @@ import { BUILDING_FOOTPRINT_INSET, SPRITE_BASE_OFFSET, TILE_H, TILE_W } from '@/
 const SELECTED_COLOR = 0x00e5c0
 const HOVERED_COLOR = 0xffd166
 
-const MARKER_FILL = 0xffd166
-const MARKER_RIM = 0x1a1a22
-const MARKER_TICK = 0x2a1f06
-const MARKER_RADIUS = 13
-const MARKER_TIP = 4
-const MARKER_GAP = 10
+const MARKER_FACE = 0xffd166
+const MARKER_LIT = 0xfff0bb
+const MARKER_SIDE = 0xb07d18
+const MARKER_RIM = 0x241a04
+const MARKER_DEPTH = 3
+const MARKER_GAP = 12
 const MARKER_BOB = 5
 const MARKER_PERIOD = 1400
 
@@ -52,35 +52,33 @@ const silhouette = (color: number) => {
   return filter
 }
 
-const pinPath = (radius: number, tip: number) => {
-  const centre = -(tip + Math.round(radius * 2))
-  const distance = Math.abs(centre) - tip
-  const half = Math.asin(radius / distance)
-  const points: number[] = []
+const bangShape = (dx: number, dy: number) => {
+  const stem = [-5.2 + dx, -35 + dy, 5.2 + dx, -35 + dy, 3.4 + dx, -14.5 + dy, -3.4 + dx, -14.5 + dy]
 
-  for (let i = 0; i <= 28; i++) {
-    const angle = Math.PI / 2 - half - (i / 28) * (2 * Math.PI - 2 * half)
-
-    points.push(radius * Math.cos(angle), centre + radius * Math.sin(angle))
-  }
-
-  points.push(0, -tip)
-
-  return { points, centre }
+  return { stem, dot: [dx, -6.2 + dy, 4.6] as const }
 }
 
 const marker = () => {
   const shape = new PIXI.Graphics()
-  const { points, centre } = pinPath(MARKER_RADIUS, MARKER_TIP)
+  const face = bangShape(0, 0)
+  const side = bangShape(-MARKER_DEPTH, MARKER_DEPTH)
 
-  shape.poly(points.map((v, i) => (i % 2 ? v + 3 : v))).fill({ color: 0x000000, alpha: 0.22 })
-  shape.poly(points).fill(MARKER_FILL).stroke({ color: MARKER_RIM, width: 2, join: 'round' })
-  shape.ellipse(0, centre - 4, MARKER_RADIUS * 0.62, MARKER_RADIUS * 0.34).fill({ color: 0xffffff, alpha: 0.34 })
+  shape.ellipse(-MARKER_DEPTH, 1, 9, 3.4).fill({ color: 0x000000, alpha: 0.22 })
+
+  shape.poly(side.stem).fill(MARKER_SIDE).stroke({ color: MARKER_SIDE, width: 2, join: 'round' })
   shape
-    .moveTo(-5.2, centre - 0.2)
-    .lineTo(-1.4, centre + 3.6)
-    .lineTo(6.2, centre - 5)
-    .stroke({ color: MARKER_TICK, width: 3.4, cap: 'round', join: 'round' })
+    .circle(...side.dot)
+    .fill(MARKER_SIDE)
+    .stroke({ color: MARKER_SIDE, width: 2 })
+
+  shape.poly(face.stem).fill(MARKER_FACE).stroke({ color: MARKER_RIM, width: 2, join: 'round' })
+  shape
+    .circle(...face.dot)
+    .fill(MARKER_FACE)
+    .stroke({ color: MARKER_RIM, width: 2 })
+
+  shape.poly([1.3, -33.2, 3.8, -33.2, 2.8, -17, 0.8, -17]).fill({ color: MARKER_LIT, alpha: 0.85 })
+  shape.circle(1.5, -7.5, 1.8).fill({ color: MARKER_LIT, alpha: 0.75 })
 
   return shape
 }
