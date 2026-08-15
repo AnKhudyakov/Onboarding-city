@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js'
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
-import { CityBuilding } from '@/entities/buildings'
+import { CityBuilding, nameKey } from '@/entities/buildings'
 import { arrived, departed } from '@/entities/progressSlice'
 import { selectBuilding } from '@/entities/tourSlice'
 import { createScene } from '@/features/city/lib/renderScene'
@@ -17,6 +18,7 @@ type Movement = ReturnType<typeof createMovementSystem>
 
 export const useControlScene = (buildings: CityBuilding[]) => {
   const dispatch = useDispatch()
+  const { t, i18n } = useTranslation()
   const selectedId = useSelector((s: RootState) => s.tour.selectedBuildingId)
 
   const sceneRef = useRef<Scene | null>(null)
@@ -48,10 +50,15 @@ export const useControlScene = (buildings: CityBuilding[]) => {
       },
     })
 
+    scene.setNames(Object.fromEntries(buildings.map((b) => [b.id, t(nameKey(b.id))])))
     fitView(app)
   }
 
   const handleResize = fitView
+
+  useEffect(() => {
+    sceneRef.current?.setNames(Object.fromEntries(buildings.map((b) => [b.id, t(nameKey(b.id))])))
+  }, [buildings, i18n.language, t])
 
   useEffect(() => {
     const scene = sceneRef.current

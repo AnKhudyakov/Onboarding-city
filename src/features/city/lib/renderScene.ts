@@ -73,6 +73,7 @@ export const createScene = (buildings: CityBuilding[], onSelect: (b: CityBuildin
     depthLayer,
     fit,
     setSelected: buildingsControl.setSelected,
+    setNames: buildingsControl.setNames,
     destroy,
   }
 }

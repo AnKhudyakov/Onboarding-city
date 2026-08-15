@@ -35,6 +35,7 @@ const silhouette = (color: number) => {
 export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuilding[], onSelect: (b: CityBuilding) => void) => {
   let selectedId: string | null = null
   let hoveredId: string | null = null
+  let names: Record<string, string> = {}
 
   const sprites: Record<string, PIXI.Sprite> = {}
   const highlights: Record<string, PIXI.Sprite> = {}
@@ -113,7 +114,7 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
 
     const sprite = sprites[active.id]
 
-    label.text = active.name
+    label.text = names[active.id] ?? active.id
     label.x = sprite.x
     label.y = sprite.y - sprite.height - LABEL_GAP
     label.visible = true
@@ -121,6 +122,11 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
 
   const setSelected = (id: string | null) => {
     selectedId = id
+    refresh()
+  }
+
+  const setNames = (next: Record<string, string>) => {
+    names = next
     refresh()
   }
 
@@ -134,5 +140,5 @@ export const createBuildings = (depthLayer: PIXI.Container, buildings: CityBuild
     Object.values(sprites).forEach((s) => s.destroy())
   }
 
-  return { setSelected, setViewScale, destroy }
+  return { setSelected, setNames, setViewScale, destroy }
 }

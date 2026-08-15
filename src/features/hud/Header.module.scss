@@ -191,14 +191,61 @@
   top: 44px;
   right: 0;
 
-  min-width: 170px;
+  min-width: 200px;
   padding: 6px;
   border: 1px solid var(--glass-line);
   border-radius: var(--radius-md);
 
-  background: var(--glass-strong);
+  background: var(--glass-sheen), var(--glass-solid);
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow-panel), var(--shadow-inset);
+}
+
+.menuLabel {
+  padding: 4px 10px 6px;
+
+  font-size: fonts.$text-xs;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.languages {
+  display: flex;
+  gap: 6px;
+  padding: 0 6px 8px;
+}
+
+.language {
+  flex: 1;
+
+  padding: 7px 8px;
+  border: 1px solid var(--glass-line);
+  border-radius: 8px;
+
+  font-size: fonts.$text-sm;
+  color: var(--text-300);
+
+  background: var(--glass-raised);
+
+  &:hover {
+    color: var(--text-100);
+    background: rgb(255 255 255 / 12%);
+  }
+}
+
+.languageActive {
+  flex: 1;
+
+  padding: 7px 8px;
+  border: 1px solid rgb(0 229 192 / 55%);
+  border-radius: 8px;
+
+  font-size: fonts.$text-sm;
+  font-weight: 600;
+  color: var(--ink-900);
+
+  background: linear-gradient(180deg, #6ff5dd, var(--accent-500));
 }
 
 .menuItem {

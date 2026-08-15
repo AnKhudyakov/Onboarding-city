@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { ENERGY_MAX, energyTick, levelFromXp, resetProgress, XP_PER_LEVEL, xpIntoLevel } from '@/entities/progressSlice'
 import { reset } from '@/entities/tourSlice'
+import { LANGUAGES, setLanguage } from '@/shared/i18n'
 
 import styles from './Header.module.scss'
 import { CoinIcon, EnergyIcon, GearIcon } from './icons'
@@ -11,6 +13,7 @@ import { CoinIcon, EnergyIcon, GearIcon } from './icons'
 const clock = (seconds: number) => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`
 
 export const Header: React.FC = () => {
+  const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const { xp, coins, energy, secondsToEnergy } = useSelector((s: RootState) => s.progress)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -32,19 +35,17 @@ export const Header: React.FC = () => {
       </div>
 
       <div className={styles.level}>
-        <span className={styles.levelBadge}>Lv. {level}</span>
+        <span className={styles.levelBadge}>{t('header.level', { level })}</span>
         <span className={styles.bar}>
           <span className={styles.barFill} style={{ width: `${(into / XP_PER_LEVEL) * 100}%` }} />
-          <span className={styles.barLabel}>
-            {into} / {XP_PER_LEVEL} XP
-          </span>
+          <span className={styles.barLabel}>{t('header.xp', { current: into, total: XP_PER_LEVEL })}</span>
         </span>
       </div>
 
       <div className={styles.resources}>
         <span className={`${styles.pill} ${styles.pillCoin}`}>
           <CoinIcon className={styles.icon} />
-          <span className={styles.value}>{coins.toLocaleString('en-US')}</span>
+          <span className={styles.value}>{coins.toLocaleString(i18n.language)}</span>
         </span>
 
         <span className={`${styles.pill} ${styles.pillEnergy}`}>
@@ -52,7 +53,7 @@ export const Header: React.FC = () => {
           <span className={styles.value}>
             {energy} / {ENERGY_MAX}
           </span>
-          <span className={styles.timer}>{energy >= ENERGY_MAX ? 'full' : clock(secondsToEnergy)}</span>
+          <span className={styles.timer}>{energy >= ENERGY_MAX ? t('header.energyFull') : clock(secondsToEnergy)}</span>
         </span>
       </div>
 
@@ -60,7 +61,7 @@ export const Header: React.FC = () => {
         <button
           type="button"
           className={styles.gear}
-          aria-label="Settings"
+          aria-label={t('header.settings')}
           aria-expanded={settingsOpen}
           onClick={() => setSettingsOpen((open) => !open)}
         >
@@ -69,6 +70,21 @@ export const Header: React.FC = () => {
 
         {settingsOpen && (
           <div className={styles.menu}>
+            <p className={styles.menuLabel}>{t('header.language')}</p>
+
+            <div className={styles.languages}>
+              {LANGUAGES.map((language) => (
+                <button
+                  key={language.code}
+                  type="button"
+                  className={i18n.language === language.code ? styles.languageActive : styles.language}
+                  onClick={() => setLanguage(language.code)}
+                >
+                  {language.label}
+                </button>
+              ))}
+            </div>
+
             <button
               type="button"
               className={styles.menuItem}
@@ -78,7 +94,7 @@ export const Header: React.FC = () => {
                 setSettingsOpen(false)
               }}
             >
-              Reset progress
+              {t('header.resetProgress')}
             </button>
           </div>
         )}

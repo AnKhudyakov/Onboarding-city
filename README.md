@@ -5,7 +5,9 @@ routes to it along the streets.
 
 ## Stack
 
-Pixi 8, React 19, TypeScript, Redux Toolkit, Vite, SCSS modules.
+Pixi 8, React 19, TypeScript, Redux Toolkit, i18next, Vite, SCSS modules.
+
+The interface is available in English and Russian, switched from the settings menu.
 
 ## Running
 

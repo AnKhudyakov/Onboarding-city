@@ -1,0 +1,47 @@
+{
+  "app": {
+    "loading": "Loading sprites…"
+  },
+  "header": {
+    "level": "Lv. {{level}}",
+    "xp": "{{current}} / {{total}} XP",
+    "energyFull": "full",
+    "settings": "Settings",
+    "resetProgress": "Reset progress",
+    "language": "Language"
+  },
+  "quests": {
+    "title": "Quests",
+    "townHall": "Reach the Town Hall",
+    "landmarks": "Visit every landmark",
+    "routes": "Walk {{count}} routes"
+  },
+  "tour": {
+    "title": "Guided tour",
+    "stops": "{{count}} stops",
+    "stop": "Stop {{current}} of {{total}}",
+    "intro": "Click a building, or start the tour, and the walker routes to it over the road graph.",
+    "back": "Back",
+    "next": "Next",
+    "start": "Start",
+    "reset": "Reset"
+  },
+  "buildings": {
+    "townHall": {
+      "name": "Town Hall",
+      "description": "The north side of the loop. Clicking a landmark asks the navigation graph for a route and the walk is animated along it."
+    },
+    "museum": {
+      "name": "Museum",
+      "description": "The east side. The whole scene shares one container sorted on grid depth, so whatever is nearer the camera is drawn last, water and pavement included."
+    },
+    "market": {
+      "name": "Market Hall",
+      "description": "The south side, and where the walker starts. Road tiles are generated from the same graph the walker routes over."
+    },
+    "library": {
+      "name": "Library",
+      "description": "The west side. Selection state lives in Redux, and the Pixi scene reads it rather than owning it."
+    }
+  }
+}
