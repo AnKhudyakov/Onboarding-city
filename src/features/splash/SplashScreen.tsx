@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { LANGUAGES, setLanguage } from '@/shared/i18n'
+import { LanguageSwitch } from '@/shared/ui/LanguageSwitch'
 
 import styles from './SplashScreen.module.scss'
 
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const SplashScreen: React.FC<Props> = ({ progress, ready, onStart }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className={styles.splash}>
@@ -35,18 +35,7 @@ export const SplashScreen: React.FC<Props> = ({ progress, ready, onStart }) => {
           {t('splash.start')}
         </button>
 
-        <div className={styles.languages}>
-          {LANGUAGES.map((language) => (
-            <button
-              key={language.code}
-              type="button"
-              className={i18n.language === language.code ? styles.languageActive : styles.language}
-              onClick={() => setLanguage(language.code)}
-            >
-              {language.label}
-            </button>
-          ))}
-        </div>
+        <LanguageSwitch />
       </div>
     </div>
   )

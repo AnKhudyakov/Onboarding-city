@@ -6,8 +6,8 @@ import type { RootState } from '@/app/store'
 import { ENERGY_MAX, energyTick, levelFromXp, resetProgress, XP_PER_LEVEL, xpIntoLevel } from '@/entities/progressSlice'
 import { resetScenario } from '@/entities/scenarioSlice'
 import { clearSelection } from '@/entities/selectionSlice'
-import { LANGUAGES, setLanguage } from '@/shared/i18n'
 import { EnergyIcon, GearIcon, GemIcon } from '@/shared/ui/icons'
+import { LanguageSwitch } from '@/shared/ui/LanguageSwitch'
 
 import styles from './Header.module.scss'
 
@@ -73,18 +73,7 @@ export const Header: React.FC = () => {
           <div className={styles.menu}>
             <p className={styles.menuLabel}>{t('header.language')}</p>
 
-            <div className={styles.languages}>
-              {LANGUAGES.map((language) => (
-                <button
-                  key={language.code}
-                  type="button"
-                  className={i18n.language === language.code ? styles.languageActive : styles.language}
-                  onClick={() => setLanguage(language.code)}
-                >
-                  {language.label}
-                </button>
-              ))}
-            </div>
+            <LanguageSwitch />
 
             <button
               type="button"

@@ -5,8 +5,8 @@ import en from './locales/en.json'
 import ru from './locales/ru.json'
 
 export const LANGUAGES = [
-  { code: 'en', label: 'English' },
-  { code: 'ru', label: 'Русский' },
+  { code: 'en', label: 'English', short: 'EN' },
+  { code: 'ru', label: 'Русский', short: 'RUS' },
 ] as const
 
 export type LanguageCode = (typeof LANGUAGES)[number]['code']
