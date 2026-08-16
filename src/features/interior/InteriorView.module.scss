@@ -1,5 +1,27 @@
 @use 'shared/styles/fonts';
 
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes room-in {
+  from {
+    transform: translateY(14px) scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
 .backdrop {
   pointer-events: auto;
 
@@ -14,6 +36,8 @@
 
   background: rgb(6 9 15 / 62%);
   backdrop-filter: blur(3px);
+
+  animation: veil-in 200ms ease-out both;
 }
 
 .room {
@@ -27,6 +51,8 @@
   background: radial-gradient(120% 100% at 20% 0%, rgb(0 229 192 / 12%), transparent 62%), var(--glass-sheen), var(--glass-solid);
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow-panel), var(--shadow-inset);
+
+  animation: room-in 320ms cubic-bezier(0.2, 0.8, 0.25, 1) 40ms both;
 }
 
 .header {
@@ -172,5 +198,12 @@
   .portrait {
     width: 116px;
     height: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .room {
+    animation: none;
   }
 }
