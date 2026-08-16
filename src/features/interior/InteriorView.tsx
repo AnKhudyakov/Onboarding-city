@@ -45,7 +45,9 @@ export const InteriorView: React.FC = () => {
         </header>
 
         <div className={styles.stage}>
-          <img className={styles.npc} src={asset(npc.sprite)} alt="" />
+          <span className={styles.portrait}>
+            <img className={styles.npc} src={asset(npc.sprite)} alt="" />
+          </span>
 
           <div className={styles.bubble}>
             <p className={styles.speaker}>{t(npcNameKey(npc.id))}</p>

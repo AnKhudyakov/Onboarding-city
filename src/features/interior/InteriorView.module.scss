@@ -68,15 +68,33 @@
 .stage {
   display: flex;
   gap: 16px;
-  align-items: flex-end;
+  align-items: center;
   padding: 18px 16px;
 }
 
-.npc {
+.portrait {
+  overflow: hidden;
   flex: none;
-  width: auto;
+
+  width: 150px;
   height: 150px;
-  filter: drop-shadow(0 6px 12px rgb(0 0 0 / 40%));
+  border: 1px solid var(--glass-line);
+  border-radius: 50%;
+
+  background: rgb(255 255 255 / 6%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    0 8px 18px rgb(0 0 0 / 38%);
+}
+
+.npc {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
 }
 
 .bubble {
@@ -151,7 +169,8 @@
     align-items: center;
   }
 
-  .npc {
-    height: 110px;
+  .portrait {
+    width: 116px;
+    height: 116px;
   }
 }
