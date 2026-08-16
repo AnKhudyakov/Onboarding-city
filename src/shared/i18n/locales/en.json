@@ -74,9 +74,9 @@
     "leave": "Leave"
   },
   "npc": {
-    "guide": "Guide",
-    "clerk": "Clerk",
-    "archivist": "Archivist"
+    "guide": "Receptionist",
+    "archivist": "Archivist",
+    "seller": "Shopkeeper"
   },
   "dialogue": {
     "townHall.1": "You found it. This is where every route starts, so let me hand you the short version.",
@@ -84,10 +84,10 @@
     "townHall.3": "Next stop is the Museum. It opened the moment you walked in here, so the arrow will point you at it.",
     "museum.1": "Mind the boxes. Everything the town keeps on itself is in this room, and most of it is still in them.",
     "museum.2": "The streets you came in on are not drawn by hand. They are worked out from the same map the walker routes over, so what you see and where you can go cannot disagree.",
-    "museum.3": "The reading room is your next stop. The clerk there keeps better notes than I do.",
-    "library.1": "Quiet in here, mostly. The town is small and the reading room is smaller.",
+    "museum.3": "The reading room is next on your route. Same catalogue, quieter shelves, so I will see you there.",
+    "library.1": "Told you I would get here first. The reading room is the calmer half of the job.",
     "library.2": "Everything on these shelves is written twice, once in English and once in Russian. The interface follows whichever you pick in the settings.",
-    "library.3": "One stop left. The market closes your route.",
+    "library.3": "One stop left. The market closes your route, and the shopkeeper is expecting you.",
     "market.1": "You came the whole way round. That is the loop, all of it.",
     "market.2": "Four stops in three stages, and the order was fixed: a building stays shut until its turn comes up.",
     "market.3": "Start again from the panel if you want to walk it a second time."

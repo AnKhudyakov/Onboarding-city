@@ -229,9 +229,11 @@
   color: var(--danger-500);
   text-align: left;
 
+  background: rgb(255 107 94 / 14%);
+
   &:hover {
     color: #ff8a80;
-    background: rgb(255 107 94 / 14%);
+    background: rgb(255 107 94 / 30%);
   }
 }
 
