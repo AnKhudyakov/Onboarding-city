@@ -18,10 +18,6 @@
       "name": "Town Hall",
       "description": "The north side of the loop. Clicking a landmark asks the navigation graph for a route and the walk is animated along it."
     },
-    "museum": {
-      "name": "Museum",
-      "description": "The east side. The whole scene shares one container sorted on grid depth, so whatever is nearer the camera is drawn last, water and pavement included."
-    },
     "market": {
       "name": "Market Hall",
       "description": "The south side, and where the walker starts. Road tiles are generated from the same graph the walker routes over."
@@ -29,6 +25,10 @@
     "library": {
       "name": "Library",
       "description": "The west side. Selection state lives in Redux, and the Pixi scene reads it rather than owning it."
+    },
+    "archive": {
+      "name": "Archive",
+      "description": "The east side. The whole scene shares one container sorted on grid depth, so whatever is nearer the camera is drawn last, water and pavement included."
     }
   },
   "splash": {
@@ -56,11 +56,11 @@
       },
       "archive": {
         "title": "Look through the archive",
-        "description": "The Museum holds the records. It opens once the first stop is behind you."
+        "description": "The records are kept in the Archive. It opens once the first stop is behind you."
       },
       "study": {
         "title": "Spend an hour in the Library",
-        "description": "Reading room on the west side of the loop, across the square from the Museum."
+        "description": "Reading room on the west side of the loop, across the square from the Archive."
       },
       "market": {
         "title": "Meet the traders",
@@ -81,15 +81,15 @@
   "dialogue": {
     "townHall.1": "You found it. This is where every route starts, so let me hand you the short version.",
     "townHall.2": "Clicking a building asks the road graph for a route, and the walker follows it. There is no free roaming here, and that is on purpose.",
-    "townHall.3": "Next stop is the Museum. It opened the moment you walked in here, so the arrow will point you at it.",
-    "museum.1": "Mind the boxes. Everything the town keeps on itself is in this room, and most of it is still in them.",
-    "museum.2": "The streets you came in on are not drawn by hand. They are worked out from the same map the walker routes over, so what you see and where you can go cannot disagree.",
-    "museum.3": "The reading room is next on your route. Same catalogue, quieter shelves, so I will see you there.",
+    "townHall.3": "Next stop is the Archive. It opened the moment you walked in here, so the marker will point you at it.",
     "library.1": "Told you I would get here first. The reading room is the calmer half of the job.",
     "library.2": "Everything on these shelves is written twice, once in English and once in Russian. The interface follows whichever you pick in the settings.",
     "library.3": "One stop left. The market closes your route, and the shopkeeper is expecting you.",
     "market.1": "You came the whole way round. That is the loop, all of it.",
     "market.2": "Four stops in three stages, and the order was fixed: a building stays shut until its turn comes up.",
-    "market.3": "Start again from the panel if you want to walk it a second time."
+    "market.3": "Start again from the panel if you want to walk it a second time.",
+    "archive.1": "Mind the boxes. Everything the town keeps on itself is in this room, and most of it is still in them.",
+    "archive.2": "The streets you came in on are not drawn by hand. They are worked out from the same map the walker routes over, so what you see and where you can go cannot disagree.",
+    "archive.3": "The reading room is next on your route. Same catalogue, quieter shelves, so I will see you there."
   }
 }

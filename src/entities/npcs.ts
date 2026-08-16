@@ -22,7 +22,7 @@ export type Dialogue = {
 
 export const DIALOGUES: Record<BuildingId, Dialogue> = {
   townHall: { npc: 'guide', lines: ['townHall.1', 'townHall.2', 'townHall.3'] },
-  museum: { npc: 'archivist', lines: ['museum.1', 'museum.2', 'museum.3'] },
+  archive: { npc: 'archivist', lines: ['archive.1', 'archive.2', 'archive.3'] },
   library: { npc: 'archivist', lines: ['library.1', 'library.2', 'library.3'] },
   market: { npc: 'seller', lines: ['market.1', 'market.2', 'market.3'] },
 }

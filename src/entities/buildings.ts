@@ -1,6 +1,6 @@
 import { BuildingPieceId } from '@/shared/constants/tiles'
 
-export type BuildingId = 'townHall' | 'museum' | 'market' | 'library'
+export type BuildingId = 'townHall' | 'archive' | 'market' | 'library'
 
 export type CityBuilding = {
   id: BuildingId
@@ -22,7 +22,7 @@ export const BUILDINGS: CityBuilding[] = [
     piece: 'officeGreen',
   },
   {
-    id: 'museum',
+    id: 'archive',
     x: 6,
     y: 4,
     entry: { x: 7, y: 4 },

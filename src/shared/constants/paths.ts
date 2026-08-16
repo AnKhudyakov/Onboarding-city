@@ -26,8 +26,8 @@ export const NODES: Record<string, Node> = Object.fromEntries(
 export const SEGMENTS: [Node, Node][] = [
   [NODES.north, NODES.townHall],
   [NODES.townHall, NODES.east],
-  [NODES.east, NODES.museum],
-  [NODES.museum, NODES.south],
+  [NODES.east, NODES.archive],
+  [NODES.archive, NODES.south],
   [NODES.south, NODES.market],
   [NODES.market, NODES.west],
   [NODES.west, NODES.library],

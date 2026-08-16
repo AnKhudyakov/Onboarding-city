@@ -12,7 +12,7 @@ export const STAGES: StageId[] = ['arrival', 'records', 'community']
 
 export const STEPS: ScenarioStep[] = [
   { id: 'welcome', stage: 'arrival', building: 'townHall' },
-  { id: 'archive', stage: 'records', building: 'museum' },
+  { id: 'archive', stage: 'records', building: 'archive' },
   { id: 'study', stage: 'records', building: 'library' },
   { id: 'market', stage: 'community', building: 'market' },
 ]
