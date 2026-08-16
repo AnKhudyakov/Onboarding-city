@@ -8,6 +8,7 @@ import { leave, nextLine } from '@/entities/interiorSlice'
 import { dialogueLineKey, DIALOGUES, npcNameKey, NPCS } from '@/entities/npcs'
 import { currentStep } from '@/entities/scenario'
 import { completeStep } from '@/entities/scenarioSlice'
+import { clearSelection } from '@/entities/selectionSlice'
 
 import styles from './InteriorView.module.scss'
 
@@ -29,9 +30,14 @@ export const InteriorView: React.FC = () => {
   const last = line >= dialogue.lines.length - 1
   const step = currentStep(completed)
 
+  const close = () => {
+    dispatch(leave())
+    dispatch(clearSelection())
+  }
+
   const finish = () => {
     if (step?.building === building) dispatch(completeStep(step.id))
-    dispatch(leave())
+    close()
   }
 
   return (
@@ -39,7 +45,7 @@ export const InteriorView: React.FC = () => {
       <section className={styles.room} aria-label={t(nameKey(building as BuildingId))}>
         <header className={styles.header}>
           <h2 className={styles.place}>{t(nameKey(building as BuildingId))}</h2>
-          <button type="button" className={styles.close} onClick={() => dispatch(leave())} aria-label={t('interior.leave')}>
+          <button type="button" className={styles.close} onClick={close} aria-label={t('interior.leave')}>
             ×
           </button>
         </header>

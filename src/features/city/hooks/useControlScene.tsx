@@ -31,6 +31,7 @@ export const useControlScene = (buildings: CityBuilding[]) => {
   const movementRef = useRef<Movement | null>(null)
   const targetRef = useRef<string | null>(null)
   const stepRef = useRef(currentStep(completed))
+  const travelledRef = useRef(false)
 
   const names = () => Object.fromEntries(buildings.map((b) => [b.id, t(nameKey(b.id))]))
 
@@ -64,7 +65,7 @@ export const useControlScene = (buildings: CityBuilding[]) => {
 
         if (!target) return
 
-        dispatch(arrived(target))
+        if (travelledRef.current) dispatch(arrived(target))
 
         if (stepRef.current?.building !== target) return
 
@@ -104,8 +105,13 @@ export const useControlScene = (buildings: CityBuilding[]) => {
     targetRef.current = selectedId
 
     if (selectedId) {
-      movement.setPath(buildPath(player.state.position, selectedId))
-      dispatch(departed())
+      const path = buildPath(player.state.position, selectedId)
+
+      travelledRef.current = path.length > 1
+
+      movement.setPath(path)
+
+      if (travelledRef.current) dispatch(departed())
     } else {
       movement.clear()
     }
