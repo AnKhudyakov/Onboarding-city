@@ -1,9 +1,12 @@
 import * as PIXI from 'pixi.js'
 
+import { NPCS } from '@/entities/npcs'
 import { Direction, ROTATION, RUN_FRAMES } from '@/entities/player'
 import { BUILDING_TEXTURES, PROP_TEXTURES, TILE_TEXTURES } from '@/shared/constants/tiles'
 
 const url = (path: string) => `${import.meta.env.BASE_URL}assets/${path}`
+
+const SPRITE_SHARE = 0.9
 
 export const playerFrame = (dir: Direction, state: 'idle' | 'run', frame: number) => `player_${dir}_${state}_${frame}`
 
@@ -19,6 +22,23 @@ const playerBundle = () =>
     })),
   ])
 
+const decodeImages = async (sources: string[], onProgress?: (progress: number) => void) => {
+  let done = 0
+
+  await Promise.all(
+    sources.map(async (src) => {
+      const image = new Image()
+
+      image.src = src
+
+      await image.decode().catch(() => undefined)
+
+      done += 1
+      onProgress?.(done / sources.length)
+    })
+  )
+}
+
 export const loadAssets = async (onProgress?: (progress: number) => void) => {
   await PIXI.Assets.load(
     [
@@ -27,6 +47,11 @@ export const loadAssets = async (onProgress?: (progress: number) => void) => {
       ...Object.entries(BUILDING_TEXTURES).map(([alias, path]) => ({ alias, src: url(path) })),
       ...playerBundle(),
     ],
-    onProgress
+    (progress) => onProgress?.(progress * SPRITE_SHARE)
+  )
+
+  await decodeImages(
+    Object.values(NPCS).map((npc) => url(npc.sprite)),
+    (progress) => onProgress?.(SPRITE_SHARE + progress * (1 - SPRITE_SHARE))
   )
 }
